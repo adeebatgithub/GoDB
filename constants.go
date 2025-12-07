@@ -1,3 +1,3 @@
-package base
+package main
 
 const NIL = ""

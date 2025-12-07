@@ -1,4 +1,4 @@
-package base
+package main
 
 func (manager Manager) GetTableNames() ([]string, error) {
 	rows, err := manager.Read(manager.Dialect.TableNames())
