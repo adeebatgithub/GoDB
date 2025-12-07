@@ -1,10 +1,8 @@
-package database
+package connections
 
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
-	"log"
 )
 
 type PSQLConfig struct {
@@ -16,7 +14,7 @@ type PSQLConfig struct {
 	SslMode  string
 }
 
-func Connect(config PSQLConfig) *sql.DB {
+func (config PSQLConfig) Connect() (*sql.DB, string, error) {
 	conf := fmt.Sprintf(
 		"dbname=%s host=%s port=%s user=%s password=%s sslmode=%s",
 		config.Database, config.Host, config.Port, config.Username, config.Password, config.SslMode,
@@ -24,14 +22,13 @@ func Connect(config PSQLConfig) *sql.DB {
 
 	db, err := sql.Open("postgres", conf)
 	if err != nil {
-		log.Fatal(err)
+		return nil, "", err
 	}
 
 	err = db.Ping()
 	if err != nil {
-		log.Fatal("Cannot connect to the database:", err)
+		return nil, "", err
 	}
 
-	fmt.Println("Connected to PostgreSQL successfully!")
-	return db
+	return db, POSTGRES, nil
 }

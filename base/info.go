@@ -1,12 +1,7 @@
-package database
+package base
 
-import (
-	"database/sql"
-	"fmt"
-)
-
-func GetTableNames(db *sql.DB) ([]string, error) {
-	rows, err := Read(db, "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
+func (manager Manager) GetTableNames() ([]string, error) {
+	rows, err := manager.Read(manager.Dialect.TableNames())
 	if err != nil {
 		return nil, err
 	}
@@ -28,8 +23,8 @@ func GetTableNames(db *sql.DB) ([]string, error) {
 	return tableNames, nil
 }
 
-func CheckTableExists(db *sql.DB, tableName string) bool {
-	tables, err := GetTableNames(db)
+func (manager Manager) CheckTableExists(tableName string) bool {
+	tables, err := manager.GetTableNames()
 	if err != nil {
 		return false
 	}
@@ -41,9 +36,8 @@ func CheckTableExists(db *sql.DB, tableName string) bool {
 	return false
 }
 
-func GetColumnNames(db *sql.DB, tableName string) ([]string, error) {
-	query := fmt.Sprintf("SELECT column_name FROM information_schema.columns WHERE table_name = '%s'", tableName)
-	rows, err := Read(db, query)
+func (manager Manager) GetColumnNames(tableName string) ([]string, error) {
+	rows, err := manager.Read(manager.Dialect.ColumnNames(tableName))
 	if err != nil {
 		return nil, err
 	}
@@ -62,8 +56,8 @@ func GetColumnNames(db *sql.DB, tableName string) ([]string, error) {
 	return columnNames, nil
 }
 
-func CheckColumnExists(db *sql.DB, tableName string, columnName string) bool {
-	columns, err := GetColumnNames(db, tableName)
+func (manager Manager) CheckColumnExists(tableName string, columnName string) bool {
+	columns, err := manager.GetColumnNames(tableName)
 	if err != nil {
 		return false
 	}

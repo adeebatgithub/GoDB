@@ -1,16 +1,15 @@
-package database
+package psql
 
 import (
 	"fmt"
-	"strconv"
 )
 
-func PrimaryKey() string {
+func (dialect Dialect) PrimaryKey() string {
 	return "SERIAL PRIMARY KEY"
 }
 
-func VarCharField(length int, unique bool, notNull bool) string {
-	query := "VARCHAR(" + strconv.Itoa(length) + ")"
+func (dialect Dialect) VarCharField(length int, unique bool, notNull bool) string {
+	query := fmt.Sprintf("VARCHAR(%d)", length)
 	if unique {
 		query += " UNIQUE"
 	}
@@ -20,7 +19,7 @@ func VarCharField(length int, unique bool, notNull bool) string {
 	return query
 }
 
-func IntegerField(unique, notNull bool) string {
+func (dialect Dialect) IntegerField(unique, notNull bool) string {
 	query := "INTEGER"
 	if unique {
 		query += " UNIQUE"
@@ -31,7 +30,7 @@ func IntegerField(unique, notNull bool) string {
 	return query
 }
 
-func BigIntField(unique, notNull bool) string {
+func (dialect Dialect) BigIntField(unique, notNull bool) string {
 	query := "BIGINT"
 	if unique {
 		query += " UNIQUE"
@@ -42,7 +41,7 @@ func BigIntField(unique, notNull bool) string {
 	return query
 }
 
-func TextField(notNull bool) string {
+func (dialect Dialect) TextField(notNull bool) string {
 	query := "TEXT"
 	if notNull {
 		query += " NOT NULL"
@@ -50,18 +49,16 @@ func TextField(notNull bool) string {
 	return query
 }
 
-func BooleanField(defaultVal *bool, notNull bool) string {
+func (dialect Dialect) BooleanField(defaultVal bool, notNull bool) string {
 	query := "BOOLEAN"
 	if notNull {
 		query += " NOT NULL"
 	}
-	if defaultVal != nil {
-		query += fmt.Sprintf(" DEFAULT %t", *defaultVal)
-	}
+	query += fmt.Sprintf(" DEFAULT %t", defaultVal)
 	return query
 }
 
-func DateField(notNull bool) string {
+func (dialect Dialect) DateField(notNull bool) string {
 	query := "DATE"
 	if notNull {
 		query += " NOT NULL"
@@ -69,7 +66,17 @@ func DateField(notNull bool) string {
 	return query
 }
 
-func TimestampField(defaultNow, notNull bool) string {
+func (dialect Dialect) DateTimeField(onAdd bool) string {
+	query := "TIMESTAMP"
+
+	if onAdd {
+		query += " DEFAULT CURRENT_TIMESTAMP"
+	}
+
+	return query
+}
+
+func (dialect Dialect) TimestampField(defaultNow, notNull bool) string {
 	query := "TIMESTAMP"
 	if notNull {
 		query += " NOT NULL"
@@ -80,7 +87,7 @@ func TimestampField(defaultNow, notNull bool) string {
 	return query
 }
 
-func DecimalField(precision, scale int, notNull bool) string {
+func (dialect Dialect) DecimalField(precision, scale int, notNull bool) string {
 	query := fmt.Sprintf("DECIMAL(%d, %d)", precision, scale)
 	if notNull {
 		query += " NOT NULL"
@@ -88,7 +95,7 @@ func DecimalField(precision, scale int, notNull bool) string {
 	return query
 }
 
-func ForeignKeyField(refTable, refColumn string, notNull bool) string {
+func (dialect Dialect) ForeignKeyField(refTable, refColumn string, notNull bool) string {
 	query := fmt.Sprintf("INTEGER REFERENCES %s(%s)", refTable, refColumn)
 	if notNull {
 		query += " NOT NULL"
