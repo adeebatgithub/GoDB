@@ -1,4 +1,4 @@
-module Godb
+module github.com/adeebatgithub/leaform
 
 go 1.24.0
 

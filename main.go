@@ -1,8 +1,9 @@
 package main
 
 import (
-	"Godb/connections"
 	"fmt"
+
+	"github.com/adeebatgithub/leaform/connections"
 )
 
 func main() {
@@ -34,11 +35,11 @@ func main() {
 	//}
 
 	//get all data => [map[]...]
-	//data, err := manager.FetchAll(UserTable.TableName, "", false)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//fmt.Println(data)
+	data, err := manager.FetchAll(UserTable.TableName, "", false)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(data)
 
 	//get data by where condition => [map[]...]
 	//where := map[string]string{

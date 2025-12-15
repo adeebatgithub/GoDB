@@ -1,10 +1,11 @@
 package main
 
 import (
-	"Godb/dialects"
 	"database/sql"
 	"fmt"
 	"strings"
+
+	"github.com/adeebatgithub/leaform/dialects"
 )
 
 func RowsToMap(rows *sql.Rows) ([]map[string]interface{}, error) {

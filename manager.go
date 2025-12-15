@@ -1,11 +1,12 @@
 package main
 
 import (
-	"Godb/connections"
-	"Godb/dialects"
-	"Godb/dialects/psql"
-	"Godb/dialects/sqlite"
 	"database/sql"
+
+	"github.com/adeebatgithub/leaform/connections"
+	"github.com/adeebatgithub/leaform/dialects"
+	"github.com/adeebatgithub/leaform/dialects/psql"
+	"github.com/adeebatgithub/leaform/dialects/sqlite"
 )
 
 type Manager struct {
