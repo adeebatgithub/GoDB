@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/adeebatgithub/leaform/connections"
+	"github.com/adeebatgithub/biscut/connections"
 )
 
 func main() {

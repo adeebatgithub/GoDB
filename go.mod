@@ -1,4 +1,4 @@
-module github.com/adeebatgithub/leaform
+module github.com/adeebatgithub/biscut
 
 go 1.24.0
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/adeebatgithub/leaform/dialects"
+	"github.com/adeebatgithub/biscut/dialects"
 )
 
 func RowsToMap(rows *sql.Rows) ([]map[string]interface{}, error) {

@@ -3,10 +3,10 @@ package main
 import (
 	"database/sql"
 
-	"github.com/adeebatgithub/leaform/connections"
-	"github.com/adeebatgithub/leaform/dialects"
-	"github.com/adeebatgithub/leaform/dialects/psql"
-	"github.com/adeebatgithub/leaform/dialects/sqlite"
+	"github.com/adeebatgithub/biscut/connections"
+	"github.com/adeebatgithub/biscut/dialects"
+	"github.com/adeebatgithub/biscut/dialects/psql"
+	"github.com/adeebatgithub/biscut/dialects/sqlite"
 )
 
 type Manager struct {
