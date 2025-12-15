@@ -9,7 +9,7 @@ Biscut currently supports:
 
 Designed for learning, experimentation, and small-to-medium projects where you want **control + convenience**.
 
-![Biscut ORM Banner](assets/biscut-banner.webp)
+![Biscut ORM Banner](assets/biscut-banner-no-bg.webp)
 
 ---
 
