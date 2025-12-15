@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	manager, err := NewManager(connections.Sqlite{Database: "db.sqlite3"})
+	manager, err := NewManager(connections.SqliteConfig{Database: "db.sqlite3"})
 	if err != nil {
 		fmt.Println(err)
 	}
