@@ -99,8 +99,12 @@ func (dialect Dialect) DecimalField(precision, scale int, notNull bool) string {
 	return query
 }
 
-func (dialect Dialect) ForeignKeyField(refTable, refColumn string, notNull bool) string {
+func (dialect Dialect) ForeignKeyField(refTable, refColumn string, notNull bool, onDelete string) string {
 	query := fmt.Sprintf("INTEGER REFERENCES %s(%s)", refTable, refColumn)
+	if onDelete != "" {
+		query += " ON DELETE " + onDelete
+		notNull = false
+	}
 	if notNull {
 		query += " NOT NULL"
 	}

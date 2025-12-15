@@ -106,7 +106,7 @@ func (manager Manager) FetchAll(tableName, orderBy string, desc bool) ([]map[str
 	return RowsToMap(rows)
 }
 
-func (manager Manager) FetchOne(tableName string, where map[string]string, orderBy string, desc bool) ([]map[string]interface{}, error) {
+func (manager Manager) FetchWhere(tableName string, where map[string]string, orderBy string, desc bool) ([]map[string]interface{}, error) {
 	if !manager.CheckTableExists(tableName) {
 		return nil, fmt.Errorf("table `%s` does not exists", tableName)
 	}

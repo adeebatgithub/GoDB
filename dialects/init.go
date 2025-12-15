@@ -9,7 +9,7 @@ type Dialect interface {
 	ColumnNames(tableName string) string
 
 	PrimaryKey() string
-	ForeignKeyField(refTable, refColumn string, notNull bool) string
+	ForeignKeyField(refTable, refColumn string, notNull bool, onDelete string) string
 	VarCharField(length int, unique bool, notNull bool) string
 	TextField(notNull bool) string
 	IntegerField(unique, notNull bool) string

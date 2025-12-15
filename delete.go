@@ -4,15 +4,23 @@ import (
 	"fmt"
 )
 
-func (manager Manager) DeleteByColumn(tableName, column string, value any) error {
+func (manager Manager) Delete(tableName string, where map[string]string) error {
+
 	if !manager.CheckTableExists(tableName) {
 		return fmt.Errorf("table %s does not exist", tableName)
 	}
 
-	tbl := manager.Dialect.Quote(tableName)
-	col := manager.Dialect.Quote(column)
-	ph := manager.Dialect.Placeholder(1)
+	// Build WHERE clause (start placeholders at 1)
+	whereClause, whereValues := BuildWhereClause(manager.Dialect, where, 1)
 
-	query := fmt.Sprintf("DELETE FROM %s WHERE %s=%s", tbl, col, ph)
-	return manager.Write(query, value)
+	// Quote table name
+	tbl := manager.Dialect.Quote(tableName)
+
+	query := fmt.Sprintf(
+		"DELETE FROM %s WHERE %s",
+		tbl,
+		whereClause,
+	)
+
+	return manager.Write(query, whereValues...)
 }
